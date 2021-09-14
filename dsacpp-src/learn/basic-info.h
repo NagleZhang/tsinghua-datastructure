@@ -15,7 +15,7 @@ class Vector() {
 
 /*
  * List's metadata:
- *  List(data, headListNode, tailNode)
+ *  List(data, headListNode, tailNode, size)
  *  ListNode(prev, next).
  * List's function: Create, Read, Update, Delete
  *   Create: allocate.
@@ -26,7 +26,7 @@ class Vector() {
 
 struct ListNode ();
 struct ListNodePosi() = ListNode();
-class ListNode () {
+struct ListNode () {
  public:
   next ListNode;
   prev ListNode;
@@ -35,7 +35,6 @@ class ListNode () {
   insertAsNext();
   insertAsPrev();
 }
-
 class List () {
  public:
   ListNode head, tail;
@@ -44,6 +43,9 @@ class List () {
   insertBeforeNode();
 }
 
+/*
+ * can implement by vector.
+ */
 class Stack() {
   pop();
   push();
@@ -51,11 +53,24 @@ class Stack() {
   trim();
 }
 
+/*
+ * can implement by vector as well.
+ */
 class Queue(){
   enqueue();
   dequeue();
 }
 
+/*
+ * BinTree's metadata:
+ *  BinNode/BinNodePosition : leftChild, rightChild, data, Parent, height
+ *  BinTree: root, _size
+ * BinTree's function: Create, Read, Update, Delete
+ *  Create: allocate
+ *  Read: 
+ *  Update: 
+ *  Delete: 
+ */
 struct BinNode {}
 
 class BinTree() {}
