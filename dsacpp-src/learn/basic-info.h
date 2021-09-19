@@ -64,7 +64,32 @@ template <typename T> void Vector<T>::fancyBubbleSort() {
  * 1. traverse B, if B is not traversed yet, and bigger then C(or C is all traversed), then put it into A.
  * 2. traverse C, if C is not traversed ye, and is bigger then B(or B is all traversed), then put it into A.
  */
-template <typename T> void Vector<T>::merge(int lo, int hi, int mi) {}
+template <typename T> void Vector<T>::merge(int lo, int hi, int mi) {
+  // let A's location to be lo.
+  T* A = data + lo;
+
+  // copy mi - lo data to B.
+  int left_side = mi - lo;
+  T* B = new T[left_side];
+  for (int i = 0; i < left_side; B[i] = A[i++]);
+
+  int right_side = hi - mi;
+  T* C = A[data + mi];
+
+  // i for traverse A, j for B, k for C;
+  for(int i,j,k = 0; j < left_side || k < right_side;) {
+    // DO 1. merge B to A
+    if (j < left_side && (!(k < right_side) || B[j] <= C[k] )){
+      A[i++] = B[j++];
+    }
+    // DO 2. merge C to A
+    if (k < right_side && (!(j<left_side) || C[k] <= B[j])){
+      A[i++] = C[k++];
+    }
+  }
+
+  delete [] B;
+}
 
 
 /*
