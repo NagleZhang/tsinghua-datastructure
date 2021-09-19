@@ -6,12 +6,66 @@
  *   Update: insert, expand, shrink, sort, unsort
  *   Delete: delete by rank;
  */
-class Vector() {
- public:
+template <typename T>
+class Vector {
+ protected:
   int _capacity;
   int _size;
-  int data;
+  T* data;
+ public:
+  Vector(int size, int capacity , T v = 0) {
+    data = new T[capacity];
+    for (int i = 0 ; i <= size; data[i++] = v);
+  }
+
+  void bubble() {};
+  void fancyBubbleSort() {};
+  void normalBubbleSort() {};
+
+  void merge() {};
 };
+/*
+ * normal code, and just for whole vector. it's bad.
+ */
+template <typename T> void Vector<T>::bubbleSort() {
+  for(int j = 0 ; j <= _size; j++) {
+    for(int i = 0; i <= _size; i++) {
+      if (data[i] > data[i+1]){
+        int tmp = data[i];
+        data[i] = data[i+1];
+        data[i+1] = tmp;
+      }
+    }
+  }
+}
+/*
+ * fancy code from , treat bubble as a single action, and if do not need bubble again, means all sorted.
+ */
+template <typename T> boolean Vector<T>::bubble() {
+  boolean sorted = true;
+  for (int i = 0 ; i <= _size; i++) {
+    // if need sort , then means it's not sorted yet.
+    sorted = false;
+    swap(data[i] , data[i++]);
+  }
+}
+
+template <typename T> void Vector<T>::fancyBubbleSort() {
+  while (!bubble());
+}
+
+/*
+ * have three part,
+ *  A first : | lo --------- mi ---------- hi |
+ *  B second: | lo --------- mi)
+ *  C third : (mi ---------- hi |
+ * what we need to do is take data[mi - lo], and data[hi - mi], merge them.
+ * since B & C is sorted, our purpose is to merge B & C , then copy it to A. so we need to figure out several things:
+ * 1. traverse B, if B is not traversed yet, and bigger then C(or C is all traversed), then put it into A.
+ * 2. traverse C, if C is not traversed ye, and is bigger then B(or B is all traversed), then put it into A.
+ */
+template <typename T> void Vector<T>::merge(int lo, int hi, int mi) {}
+
 
 /*
  * List's metadata:
