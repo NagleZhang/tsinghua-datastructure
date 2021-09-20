@@ -1,3 +1,5 @@
+#pragma once
+
 /*
  * vector's metadata: size, capacity, data
  * vector's functions: Create, Read, Update, Delete
@@ -6,8 +8,7 @@
  *   Update: insert, expand, shrink, sort, unsort
  *   Delete: delete by rank;
  */
-template <typename T>
-class Vector {
+template <typename T> class Vector {
  protected:
   int _capacity;
   int _size;
@@ -27,7 +28,7 @@ class Vector {
 /*
  * normal code, and just for whole vector. it's bad.
  */
-template <typename T> void Vector<T>::bubbleSort() {
+template <typename T> void Vector<T>::normalBubbleSort() {
   for(int j = 0 ; j <= _size; j++) {
     for(int i = 0; i <= _size; i++) {
       if (data[i] > data[i+1]){
@@ -103,17 +104,35 @@ template <typename T> void Vector<T>::merge(int lo, int hi, int mi) {
  *   Delete: delete by rank;
  */
 
-struct ListNode ();
-struct ListNodePosi() = ListNode();
-struct ListNode () {
- public:
-  next ListNode;
-  prev ListNode;
-  int data;
+template <typename T> struct ListNode;
+template <typename T> using ListNodePosi() = ListNode();
 
-  insertAsNext();
-  insertAsPrev();
+template <typename T> struct ListNode {
+  ListNode() {}
+ListNode(T data, ListNodePosi<T> prev = null, ListNodePosi<T> next = null)
+  : data(data), prev(prev), next(next) {}
+  ListNodePosi<T> next;
+  ListNodePosi<T> prev;
+  T data;
+
+  ListNodePosi<T> insertAsNext();
+  ListNodePosi<T> insertAsPrev();
+};
+
+template <typename T> ListNodePosi<T> ListNode<T>::insertAsPrev(T const& data) {
+  ListNodePosi<T> newNode = new ListNode(data, prev, this);
+  prev.next = nowNode;
+  prev = newNode;
+  return newNode;
 }
+
+template <typename T> ListNodePosi<T> ListNode<T>::insertAsNext(T const& data) {
+  ListNodePosi<T> newNode = new ListNode(data, this, next);
+  next = newNode;
+  next.prev = newNode;
+  return newNode;
+}
+
 class List () {
  public:
   ListNode head, tail;
@@ -125,19 +144,27 @@ class List () {
 /*
  * can implement by vector.
  */
-class Stack() {
-  pop();
-  push();
 
-  trim();
-}
+template <typename T> class Stack: public Vector<T>{
+  void push(T &const data){ insert(size(), data)};
+  T pop() {
+    return remove( size() - 1);
+  };
+  T& top() {
+    return (*this)[size() - 1];
+  };
+};
 
 /*
  * can implement by vector as well.
  */
-class Queue(){
-  enqueue();
-  dequeue();
+template <typename T> class Queue: public Vector<T> {
+  void enqueue( T const & data){
+    insert(size(), data);
+  };
+  T* dequeue(){
+    remove(first());
+  };
 }
 
 /*
@@ -150,7 +177,19 @@ class Queue(){
  *  Update: 
  *  Delete: 
  */
-struct BinNode {}
+template <typename T> struct BinNode {
+  T data;
+  BinNode(T) parent;
+  BinNode(T) leftChild;
+  BinNode(T) rightChild;
+  int hight;
+
+BinNode():
+  parent(null);
+  leftChild(null);
+  rightChild(null);
+  hight(0);
+}
 
 class BinTree() {}
 
