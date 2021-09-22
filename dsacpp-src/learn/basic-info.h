@@ -92,7 +92,6 @@ template <typename T> void Vector<T>::merge(int lo, int hi, int mi) {
   delete [] B;
 }
 
-
 /*
  * List's metadata:
  *  List(data, headListNode, tailNode, size)
@@ -165,7 +164,7 @@ template <typename T> class Queue: public Vector<T> {
   T* dequeue(){
     remove(first());
   };
-}
+};
 
 /*
  * BinTree's metadata:
@@ -177,6 +176,18 @@ template <typename T> class Queue: public Vector<T> {
  *  Update: 
  *  Delete: 
  */
+template <typename T> struct BinNode{};
+
+#define BinNodePosi(T) BinNode<T>*;
+
+/*
+ * as a node , this data should be able to:
+ *  1. terverse
+ *  2. find parent, left child , right child
+ *  3. get current height.
+ *  4. insert & remove node.
+ */
+
 template <typename T> struct BinNode {
   T data;
   BinNode(T) parent;
@@ -184,15 +195,82 @@ template <typename T> struct BinNode {
   BinNode(T) rightChild;
   int hight;
 
-BinNode():
-  parent(null);
-  leftChild(null);
-  rightChild(null);
-  hight(0);
-}
+  BinNode(): parent(null), leftChild(null), rightChild(null),hight(0) { }
+  BinNode(T e, BinNodePosi(T) parent, BinNodePosi(T) leftChild, BinNodePosi(T) rightChild , int height ) {
+    data = e;
+    parent = parent;
+    leftChild = leftChild;
+    rightChild = rightChild;
+    hight = hight;
+  }
+};
 
-class BinTree() {}
+/*
+ * as a tree manager, this structure should be able to:
+ *  1. get root node.
+ *  2. CRUD tree, tree need to know where to insert & where to delete the node.
+ */
+class BinTree() {
+ protected:
+  int _size;
+  BinNodePosi(T) root;
 
-struct GraphNode {}
+  updateHeight(BinNodePosi(T) x);
+  // because Binary Node's child are not fixed. so it's hard to maintain it's height.
+  // alternatively , just update all the height above. because binary tree's above is fixed.
+  updateHeightAbove() {}
+ public:
+  BinTree(): _size(0), root(NULL) {}
+  ~BinTree() {
+    if (0 < _size) { remove(root);}
+  }
+  int size() {return _size;}
 
-class Graph() {}
+  template <typename T, typename VT> void trav_recur_preorder(BinNodePosi(T) node, VT& visit) {
+    if (!x) return;
+    visit(x -> data);
+    trav_preorder(node -> lc, visit);
+    trav_preorder(node -> rc, visit);
+  }
+
+  template <typename T, typename VT> void trav_recur_inorder(BinNodePosi(T) node, VT& visit) {
+    if (!x) return;
+    trav_preorder(node -> lc, visit);
+    visit(x -> data);
+    trav_preorder(node -> rc, visit);
+  }
+
+  template <typename T, typename VT> void trav_recur_postorder(BinNodePosi(T) node, VT& visit) {
+    if (!x) return;
+    trav_preorder(node -> lc, visit);
+    trav_preorder(node -> rc, visit);
+    visit(x -> data);
+  }
+
+  template <typename T, typename VT> static void visitAloneLeftBranch(BinNodePosi(T) leftNode, VT& visit, Stack<BinNodePosi(T)> & stack) {
+    while(leftNode -> lc) {
+      visit(x -> data);
+      stack.push(x->rc);
+      leftNode = leftNode -> lc;
+    }
+  }
+
+  // because recursive version take to much space, so ,it's better change it to iteration version.
+  template <typename T, typename VT> void trev_iter_preorder(BinNodePosi(T) node, VT& visit) {
+    Stack<BinNodePosi(T)> stack;
+    while( true ) {
+      visitAloneLeftBranch(node, VT, stack);
+      if (stack.empty()) {
+        break;
+      }
+      node = stack.pop();
+    }
+  }
+  template <typename T, typename VT> void trev_iter_inorder(BinNodePosi(T) node, VT& visit) {}
+  template <typename T, typename VT> void trev_iter_postorder(BinNodePosi(T) node, VT& visit) {}
+
+};
+
+struct GraphNode {};
+
+class Graph() {};
