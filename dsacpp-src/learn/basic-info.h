@@ -266,7 +266,27 @@ class BinTree() {
       node = stack.pop();
     }
   }
-  template <typename T, typename VT> void trev_iter_inorder(BinNodePosi(T) node, VT& visit) {}
+
+  template <typename T> void goAloneLeftBranch(BinNodePosi(T) inNode, Stack<BinNodePosi(T)> & stack) {
+    while(x) {
+      stack.push(x);
+      x = x -> leftNode;
+    }
+  }
+
+  template <typename T, typename VT> void trev_iter_inorder(BinNodePosi(T) node, VT& visit) {
+    Stack<BinNodePosi(T)> stack;
+    while (true) {
+      goAloneLeftBranch(node, stack);
+      if (stack.empty()){
+        break;
+      }
+      node = stack.pop();
+      visit(node -> data);
+      node = node -> rightNode;
+    }
+  }
+
   template <typename T, typename VT> void trev_iter_postorder(BinNodePosi(T) node, VT& visit) {}
 
 };
