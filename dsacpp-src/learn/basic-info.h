@@ -1,4 +1,4 @@
-#pragma once
+// kinda pseudocode
 
 /*
  * vector's metadata: size, capacity, data
@@ -287,9 +287,44 @@ class BinTree() {
     }
   }
 
-  template <typename T, typename VT> void trev_iter_postorder(BinNodePosi(T) node, VT& visit) {}
+  template <typename T, typename VT> static void gotoHVFL(Stack<BinNodePosi(T)> & stack) {
+    while(BinNodePosi(T) x = stack.top()) {
+      if ( HasLChild( *x ) ) {
+        if ( HasRChild( *x ) stack.push( x -> rightNode ));
+        stack.push( x -> leftChild );
+      } else {
+        stack.push( x -> rightNode );
+      }
+    }
+    stack.pop();
+  }
+
+  template <typename T, typename VT> void trev_iter_postorder(BinNodePosi(T) node, VT& visit) {
+    Stack<BinNodePosi(T)> stack;
+    if (x) stack.push( x );
+    while( !stack.empty() ) {
+      if ( stack.top() != x-> parent ){
+        gotoHVFL( stack );
+      }
+    }
+
+    x = s.pop();
+    visit( x-> data );
+  }
+
+  template <typename T, typename VT> void trev_iter_postorder(BinNodePosi(T) node, VT& visit) {
+    Queue<BinNodePosi(T)> queue;
+    queue.enqueue(node);
+    while(!queue.empty()) {
+      BinNodePosi(T) x = queue.dequeue();
+      visit(x->data);
+      if (HasLChild( *x )) queue.enqueue(x->leftNode);
+      if (HasRChild( *x )) queue.enqueue(x->rightNode);
+    }
+  }
 
 };
+
 
 struct GraphNode {};
 
