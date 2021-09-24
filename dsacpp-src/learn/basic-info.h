@@ -325,7 +325,34 @@ class BinTree() {
 
 };
 
+typedef enum {undiscovered, discovered, visited} VStatus;
+typedef enum {undetermined, tree, cross, forward, backword } EType;
+template <typename Tv> struct Vertex {
+  Tv data;
+  int inDegree, outDegree;
+  VStatus status;
+  int dTime, fTIme;
+  int parent;
+  int priority;
+};
 
-struct GraphNode {};
+template <typename Te> struct Edge {
+  Te data;
+  int weight;
+  EType type;
+};
 
-class Graph() {};
+
+// 邻接矩阵实现
+/*
+ * a graph operation contains several things:
+ 1. add a row into vector
+ 2. add a column into vector
+ 3. add a Veterx
+ */
+template <typename Tv, typename Te> class GraphMatrix() {
+  Vector<Vertex<Tv>> V;
+  Vector< Vector< Edge<Te> *> > E;
+};
+
+
