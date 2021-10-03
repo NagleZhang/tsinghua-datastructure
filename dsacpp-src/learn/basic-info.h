@@ -203,6 +203,9 @@ template <typename T> struct BinNode {
     rightChild = rightChild;
     hight = hight;
   }
+
+  void zig();
+  void zag();
 };
 
 /*
@@ -356,3 +359,48 @@ template <typename Tv, typename Te> class GraphMatrix() {
 };
 
 
+/*
+  in order recurse: a b c d e f
+- before zig:
+     d
+  -------
+  b     e
+-----
+a   c
+
+- after zig:
+     b
+  -------
+  a     d
+      -----
+      c   e
+
+*/
+
+// zig & zag for AVL Tree;
+template <typename T> void BinNode::zig() {
+  // first, change current node's parent point to current node's left child.
+  lChild = new BinNodePosi leftChild();
+  lChild = this -> lc;
+  if (x -> parent) {
+    (( this == this -> parent -> rc ) ?
+     lChild->parent->lc : lChild->parent->rc ) = lChild;
+  }
+
+  // second, change current node's left child , to left child node's right child.
+  lc = lChild -> rc; if (lc) lc -> parent = this;
+
+  // third, change new root's(lChild) left child to this.
+  lChild -> rc = this; this -> parent = lChild;
+
+  // update current node's height.
+
+}
+
+template <typename T> void BinNode::zag() {
+  // first: change current node parent point to right child.
+
+  // second: change right child's right child to to current left child.
+
+  // third: change current node as new root's left child.
+}

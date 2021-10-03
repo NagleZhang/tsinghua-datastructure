@@ -8,6 +8,23 @@
 
 #pragma once
 
+/*
+in order recurse: a b c d e f
+
+- before zag:
+     b
+  -------
+  a     d
+      -----
+      c   e
+
+- after zag:
+     d
+  -------
+  b     e
+-----
+a   c
+ */
 template <typename T> BinNodePosi<T> BinNode<T>::zag() { //ÄæÊ±ÕëÐý×ª
    BinNodePosi<T> rChild = rc;
    rChild->parent = this->parent;
@@ -15,7 +32,7 @@ template <typename T> BinNodePosi<T> BinNode<T>::zag() { //ÄæÊ±ÕëÐý×ª
       ( ( this == rChild->parent->lc ) ? rChild->parent->lc : rChild->parent->rc ) = rChild;
    rc = rChild->lc; if ( rc ) rc->parent = this;
    rChild->lc = this; this->parent = rChild;
-// update heights
+   // update heights
    height = 1 + max ( stature ( lc ), stature ( rc ) );
    rChild->height = 1 + max ( stature ( rChild->lc ), stature ( rChild->rc ) );
    for ( BinNodePosi<T> x = rChild->parent; x; x = x->parent )
