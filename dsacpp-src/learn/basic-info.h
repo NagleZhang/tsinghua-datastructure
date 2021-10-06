@@ -346,6 +346,7 @@ template <typename Te> struct Edge {
 };
 
 
+<<<<<<< HEAD
 // 邻接矩阵实现
 /*
  * a graph operation contains several things:
@@ -404,3 +405,9 @@ template <typename T> void BinNode::zag() {
 
   // third: change current node as new root's left child.
 }
+
+
+// 堆
+// 完全二叉堆就是利用二叉树的逻辑来组织线性的数据。
+// 但是， 二叉堆仅仅需要维护最大即可，可用于优先级队列。这样，在队列中，如何排队，可以借助这种思维方式。
+// 二叉堆当中， 设计到如何构建，蛮力算法会达到 n*log n 的时间复杂度。所以，弗洛伊德算法，是从抽象的角度来考虑， 通过假设二叉堆已经存在，合并二叉堆的方式，再添加一次下滤的过程，来进行构建。复杂度可以达到 n。通俗的来讲，就是在向量中，找到中间位置， 然后不断的将前面的向量下滤，从而实现堆构建。就是二分思想的另外一种运用罢辽。
